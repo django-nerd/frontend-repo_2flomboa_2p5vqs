@@ -40,6 +40,12 @@
   .crt-glow {
     text-shadow: 0 0 6px rgba(116, 255, 157, 0.35), 0 0 18px rgba(116, 255, 157, 0.2);
   }
+  .pip-image {
+    @apply overflow-hidden rounded border border-[#2d6b52] bg-[#0b251c] shadow-[0_0_0_1px_rgba(116,255,157,0.12)_inset];
+  }
+  .pip-badge {
+    @apply inline-flex items-center gap-2 px-2 py-1 text-xs border border-[#2d6b52] bg-[#0f2b20] rounded;
+  }
 }
 
 /* Utilities */
@@ -67,10 +73,41 @@
   .animate-scan {
     animation: scan 2.8s linear infinite;
   }
+
+  .animate-marquee {
+    animation: marquee 24s linear infinite;
+  }
+
+  .spin-slow {
+    animation: spin 6s linear infinite;
+  }
+  .spin-slower {
+    animation: spin 12s linear infinite;
+  }
+  .blink {
+    animation: blink 1.4s steps(2, start) infinite;
+  }
+
+  .img-green {
+    filter: grayscale(1) sepia(1) hue-rotate(60deg) saturate(3) brightness(1.1) contrast(1.1);
+  }
 }
 
 @keyframes scan {
   0% { transform: translateY(100%); opacity: .2; }
   40% { opacity: .6; }
   100% { transform: translateY(-100%); opacity: .2; }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes blink {
+  50% { opacity: 0.4; }
 }

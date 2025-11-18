@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Search, Wrench, Globe, Shield, Mail, ArrowRight } from 'lucide-react'
+import { useMemo, useState } from 'react'
+import { Search, Wrench, Globe, Shield, Mail, ArrowRight, Sparkles, Gauge, Signal, Rocket, Star, CheckCircle2, Cpu, Cog, Pickaxe, Satellite } from 'lucide-react'
 
 function App() {
   const [site, setSite] = useState('')
@@ -38,6 +38,14 @@ function App() {
     },
   ]
 
+  const logos = useMemo(() => [
+    'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1581091215367-59ab6b11410d?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1581091015655-f58f02b8b808?q=80&w=800&auto=format&fit=crop',
+  ], [])
+
   return (
     <div className="min-h-screen bg-[#0b1f17] text-[#c2ffb2] relative overflow-hidden">
       {/* CRT scanlines & vignette */}
@@ -52,9 +60,10 @@ function App() {
               <div className="h-8 w-8 rounded-sm bg-[#1a3d2e] border border-[#2d6b52] shadow-[0_0_12px_rgba(72,255,169,0.25)_inset]" />
               <span className="tracking-[0.15em] text-sm md:text-base">PIP-SEO // FOR TRADIES</span>
             </div>
-            <div className="hidden md:flex items-center gap-4 text-xs">
-              <span className="px-2 py-1 border border-[#2d6b52] bg-[#0f2b20] rounded">MODE: FIELD</span>
-              <span className="px-2 py-1 border border-[#2d6b52] bg-[#0f2b20] rounded">SIGNAL: STRONG</span>
+            <div className="hidden md:flex items-center gap-2 text-xs">
+              <span className="pip-badge"><Signal className="h-3.5 w-3.5"/>SIGNAL: STRONG</span>
+              <span className="pip-badge"><Gauge className="h-3.5 w-3.5"/>MODE: FIELD</span>
+              <span className="pip-badge blink"><Sparkles className="h-3.5 w-3.5"/>CRT: STABLE</span>
             </div>
           </div>
         </div>
@@ -95,6 +104,7 @@ function App() {
             <p className="text-xs opacity-80 mt-2">We’ll reply with a quick SEO check. Free and simple.</p>
           </div>
 
+          {/* Animated dashboard */}
           <div className="pip-panel p-0 overflow-hidden relative">
             <div className="h-full w-full bg-[#0f2b20] p-6 md:p-8 grid grid-cols-2 gap-4">
               {[
@@ -108,8 +118,57 @@ function App() {
                   <span className="text-2xl font-semibold tracking-wide">{it.value}</span>
                 </div>
               ))}
+              <div className="col-span-2 grid grid-cols-3 gap-4">
+                {Array.from({length:3}).map((_,i)=> (
+                  <div key={i} className="h-2 bg-[#153628] rounded overflow-hidden">
+                    <div className="h-full bg-[#74ff9d] animate-marquee" style={{width:'200%'}}/>
+                  </div>
+                ))}
+              </div>
             </div>
             <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-transparent via-[#74ff9d] to-transparent opacity-60 animate-scan" />
+          </div>
+        </section>
+
+        {/* Trust strip with images */}
+        <section className="max-w-6xl mx-auto mt-10 md:mt-16">
+          <div className="pip-panel p-4 md:p-5">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="h-3 w-3 bg-[#74ff9d] rounded-sm shadow-[0_0_12px_#74ff9d]" />
+              <h2 className="text-base md:text-lg tracking-wide">Recent work, the Pip‑Boy way</h2>
+            </div>
+            <div className="grid sm:grid-cols-3 gap-3">
+              {logos.map((src, i)=> (
+                <figure key={i} className="pip-image">
+                  <img src={src} alt="Project example" className="w-full h-28 sm:h-32 object-cover img-green"/>
+                </figure>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Why us */}
+        <section className="max-w-6xl mx-auto mt-10 md:mt-16">
+          <div className="pip-panel p-6 md:p-8">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="h-3 w-3 bg-[#74ff9d] rounded-sm shadow-[0_0_12px_#74ff9d]" />
+              <h2 className="text-xl md:text-2xl tracking-wide">Why tradies pick us</h2>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                {icon: Rocket, title: 'Fast setup', text: 'From hello to live in days, not months.'},
+                {icon: Cpu, title: 'Tech that just works', text: 'Clean code, quick hosting, no nonsense.'},
+                {icon: Cog, title: 'Plain-English reports', text: 'Know what changed and why it matters.'},
+              ].map((f)=> (
+                <div key={f.title} className="border border-[#2d6b52] bg-[#0b251c] rounded-md p-5">
+                  <div className="flex items-center gap-2 text-[#74ff9d] mb-2">
+                    <f.icon className="h-5 w-5"/>
+                    <span className="tracking-[0.15em] text-xs">{f.title.toUpperCase()}</span>
+                  </div>
+                  <p className="text-sm text-[#a7f3c4]/90">{f.text}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -136,11 +195,40 @@ function App() {
           </div>
         </section>
 
+        {/* Process timeline with animation */}
+        <section className="max-w-6xl mx-auto mt-10 md:mt-16">
+          <div className="pip-panel p-6 md:p-8">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="h-3 w-3 bg-[#74ff9d] rounded-sm shadow-[0_0_12px_#74ff9d]" />
+              <h2 className="text-xl md:text-2xl tracking-wide">How it works</h2>
+            </div>
+            <ol className="relative border-l border-[#2d6b52] pl-6 space-y-6">
+              {[
+                {icon: Search, title: '1) Quick check', text: 'You send your site. We reply with quick wins.'},
+                {icon: Pickaxe, title: '2) Fix the big stuff', text: 'We tune speed, headings, copy and structure.'},
+                {icon: Satellite, title: '3) Get found', text: 'You rank better locally and more jobs come in.'},
+              ].map((s,idx)=> (
+                <li key={s.title} className="relative">
+                  <span className="absolute -left-3 top-1.5 h-2 w-2 bg-[#74ff9d] rounded-sm" />
+                  <div className="flex items-start gap-3">
+                    <s.icon className="h-5 w-5 text-[#74ff9d] mt-0.5"/>
+                    <div>
+                      <h4 className="tracking-wide text-sm md:text-base">{s.title}</h4>
+                      <p className="text-sm text-[#a7f3c4]/90">{s.text}</p>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ol>
+            <div className="mt-6 h-1 bg-gradient-to-r from-transparent via-[#74ff9d] to-transparent opacity-70 animate-scan" />
+          </div>
+        </section>
+
         {/* CTA */}
         <section className="max-w-6xl mx-auto mt-10 md:mt-16 mb-12">
           <div className="pip-panel p-6 md:p-8 text-center">
             <h3 className="text-2xl md:text-3xl font-semibold crt-glow">Send us your website for a free SEO check.</h3>
-            <p className="mt-3 text-[#a7f3c4]/90">One message. No pressure. We’ll reply with quick wins you can do now.</p>
+            <p className="mt-3 text-[#a7f3c4]/90 max-w-2xl mx-auto">One message. No pressure. We’ll reply with quick wins you can do now. If you want help, we’ll quote it straight and simple.</p>
             <form onSubmit={handleSend} className="mt-6 max-w-xl mx-auto flex flex-col sm:flex-row gap-3">
               <input
                 type="url"
@@ -155,6 +243,11 @@ function App() {
                 Send my site
               </button>
             </form>
+            <div className="mt-6 flex items-center justify-center gap-6 text-xs opacity-80">
+              <span className="pip-badge"><CheckCircle2 className="h-3.5 w-3.5"/>No lock‑in</span>
+              <span className="pip-badge"><Star className="h-3.5 w-3.5"/>Local focus</span>
+              <span className="pip-badge"><Rocket className="h-3.5 w-3.5"/>Quick turnaround</span>
+            </div>
           </div>
         </section>
       </main>
