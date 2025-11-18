@@ -15,14 +15,34 @@
   html {
     font-family: var(--font-sans);
     font-feature-settings: "rlig" 1, "calt" 1;
+    background: #0b1f17;
   }
 
   body {
-    @apply antialiased;
+    @apply antialiased text-[#c2ffb2];
   }
 }
 
-/* Custom utility classes for shadcn/ui patterns */
+/* Components */
+@layer components {
+  .pip-panel {
+    @apply border border-[#2d6b52] bg-[#0f2b20] rounded md:rounded-lg shadow-[0_0_0_1px_rgba(116,255,157,0.12)_inset] backdrop-blur-[1px];
+  }
+  .pip-input {
+    @apply bg-[#0b251c] border border-[#2d6b52] rounded px-4 py-3 text-[#c2ffb2] placeholder:text-[#a7f3c4]/60 focus:outline-none focus:ring-2 focus:ring-[#74ff9d] focus:border-[#74ff9d] shadow-[0_0_0_1px_rgba(116,255,157,0.12)_inset];
+  }
+  .pip-button {
+    @apply inline-flex items-center gap-2 bg-[#1a3d2e] border border-[#2d6b52] text-[#c2ffb2] px-4 py-3 rounded font-medium hover:bg-[#20503c] active:bg-[#173a2c] transition-colors shadow-[0_0_0_1px_rgba(116,255,157,0.2)_inset];
+  }
+  .pip-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-3 py-2 border border-[#2d6b52] text-[#c2ffb2] rounded hover:bg-[#153628] transition-colors;
+  }
+  .crt-glow {
+    text-shadow: 0 0 6px rgba(116, 255, 157, 0.35), 0 0 18px rgba(116, 255, 157, 0.2);
+  }
+}
+
+/* Utilities */
 @layer utilities {
   .animate-in {
     animation-name: animateIn;
@@ -43,4 +63,14 @@
     --tw-exit-translate-x: initial;
     --tw-exit-translate-y: initial;
   }
+
+  .animate-scan {
+    animation: scan 2.8s linear infinite;
+  }
+}
+
+@keyframes scan {
+  0% { transform: translateY(100%); opacity: .2; }
+  40% { opacity: .6; }
+  100% { transform: translateY(-100%); opacity: .2; }
 }
